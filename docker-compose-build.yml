@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  zip_processor:
+    build:
+      context: .
+      target: prod
+      dockerfile: zip_processor/Dockerfile
+    container_name: zip-processor
+    image: pennsieve/zip-processor:${IMAGE_TAG}

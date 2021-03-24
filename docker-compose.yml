@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+  zip_processor:
+    build:
+      context: .
+      dockerfile: zip_processor/Dockerfile
+    container_name: zip-processor
+    command: ["python", "-m", "pytest", "-s", "-x", "--cov-report", "html:/docker_scratch/htmlreport", "--cov=zip_processor", "tests/"]
+    env_file:
+      - zip_processor/test.env
+    image: pennsieve/zip-processor:${IMAGE_TAG}
+    volumes:
+      - ./data/zip:/docker_scratch/
+      - ./zip_processor/tests/resources:/test-resources/
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
